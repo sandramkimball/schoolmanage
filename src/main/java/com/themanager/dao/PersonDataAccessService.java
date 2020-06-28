@@ -7,13 +7,8 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 import com.example.themanager.models.Person;
 
-// tell Spring to instantiated this class as beans to inject to other classes
-// 'fakeDao' to be replaced by whatever db usd (ex. mongo)
-@Repository('fakeDao')
-
-public class FakePersonDataService implements PersonDao {
-    private static List<Person> DV = new ArrayList<>();
-
+@Respository('postgres')
+public class PersonDataAccessService implements PersonDao {
     @Override
     public int insertPerson(UUID id, Person person){
         DB.add( new Person(id, person.getName() ));
@@ -22,7 +17,7 @@ public class FakePersonDataService implements PersonDao {
 
     @Override
     public List<Person> selectAllPeople() {
-        return DB;
+        return List.of(new Person(UUID.randomUUID(), name: 'FAKE POSTGRESS DB'));
     }
 
     @Override
@@ -55,4 +50,5 @@ public class FakePersonDataService implements PersonDao {
                 });
                 .orElse(other: 0)
     }
+
 }

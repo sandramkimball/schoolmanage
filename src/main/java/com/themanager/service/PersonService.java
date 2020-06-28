@@ -11,8 +11,8 @@ public class PersonService {
     // get interface, not class
     private final PersonDao personDao;
 
-    @Autowired // Spring injection
-    public PersonService(@Qualifier('fakeDao') PersonDao personDao){
+    @Autowired // Spring injection - switch Qualifier to whatever
+    public PersonService(@Qualifier('postgres') PersonDao personDao){
         this.personDao = personDao;
     }
 
@@ -21,10 +21,18 @@ public class PersonService {
     }
 
     public List<Person> getAllPeople() {
-        return personDao.getAllPeople()
+        return personDao.getAllPeople();
     }
 
     public Optional<Person> getPersonById(UUID id){
-        return personDao.selectPersonById(id)
+        return personDao.selectPersonById(id);
+    }
+
+    public interface deletePerson(UUID id){
+        return personDao.deletePerson(id);
+    }
+
+    public int updatePerson(UUID id, Person person){
+        return personDao.updatePerson(id, person);
     }
 }
